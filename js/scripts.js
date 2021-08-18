@@ -66,10 +66,12 @@ async function handlePackage({ target }) {
         }
 
         if (processedCount === fileCount) {
-          fs.root.getFile(courseId + '/' + launchLink, {}, entry => {
-            // console.log('TCL ~ file: scripts.js ~ line 53 ~ Object.entries ~ entry.toURL()', entry.toURL())
-            const courseData = { title, courseId, entryUrl: entry.toURL() }
-            loadCourse(courseData.entryUrl)
+          const [ launchLinkFile, ...launchLinkSearch ] = launchLink.split('?')
+          fs.root.getFile(courseId + '/' + launchLinkFile, {}, entry => {
+            const entryUrl = [ entry.toURL(), ...launchLinkSearch ].filter(Boolean).join('?')
+            // console.log('TCL ~ file: scripts.js ~ line 53 ~ Object.entries ~ entryUrl', entryUrl)
+            const courseData = { title, courseId, entryUrl }
+            loadCourse(entryUrl)
             addLink(courseData)
             updateStorage(courseData)
           })
