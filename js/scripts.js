@@ -135,11 +135,8 @@ function loadCourse(entryUrl) {
 
 function setAlert(msg = '') {
   alertMessage.innerText = msg
-  if (msg) {
-    alertMessage.classList.remove('d-none')
-  } else {
-    alertMessage.classList.add('d-none')
-  }
+  const method = msg ? 'remove' : 'add'
+  alertMessage.classList[method]('d-none')
 }
 
 function resetScorm() {
